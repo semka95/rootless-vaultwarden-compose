@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  vaultwarden:
+    image: vaultwarden/server:1.24.0-alpine
+    container_name: vaultwarden
+    restart: always
+    ports:
+      - 8000:8000
+    env_file:
+      - settings.env
+      - vault.env
+    volumes:
+      - ./vw-data:/data
+    networks:
+      - proxy-tier
+      - maria
+
+networks:
+  proxy-tier:
+    external:
+      name: proxy-tier
+  maria:
+    external:
+      name: maria
